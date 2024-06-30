@@ -25,7 +25,7 @@ class Program
 		{
 			var ENV_DOTNET_ENVIRONMENT = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
 
-			config.AddJsonFile($@"Config\appsettings.json", optional: false)
+			config.AddJsonFile(@"Config\appsettings.json", optional: false)
 				.AddJsonFile($@"Config\appsettings.{ENV_DOTNET_ENVIRONMENT}.json", optional: true)
 				.AddEnvironmentVariables()
 				.Build();
@@ -48,10 +48,11 @@ class Program
 			hostContext.Configuration.GetSection("ServiceConfiguration").Bind(serviceConfiguration);
 
 			services.AddSingleton(serviceConfiguration);
-
-			services.AddHostedService<GenericService>();
 			services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 			services.AddSingleton<IGuidProvider, GuidProvider>();
 			services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+
+			// The Service itself
+			services.AddHostedService<GenericService>();
 		});
 }

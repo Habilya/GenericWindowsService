@@ -6,7 +6,7 @@ public class ServiceConfiguration
 	public int RunEveryMS { get; init; } = 3000;
 	public int MaxDegreeOfParallelism { get; init; } = 5;
 	public bool IsNetworkPingEnabled { get; init; } = false;
-	public string NetworkPathToPing { get; init; } = "";
+	public string NetworkPathToPing { get; init; } = default!;
 
 	public List<ScheduledProcessConfiguration> ScheduledProcesses { get; init; } = default!;
 }
