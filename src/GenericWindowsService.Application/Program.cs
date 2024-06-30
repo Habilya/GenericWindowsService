@@ -44,11 +44,10 @@ class Program
 		.ConfigureServices((hostContext, services) =>
 		{
 			// Read appsettings.json into a model
-			var appSettings = new AppSettings();
-			hostContext.Configuration.GetSection("AppSettings").Bind(appSettings);
+			var serviceConfiguration = new ServiceConfiguration.ServiceConfiguration();
+			hostContext.Configuration.GetSection("ServiceConfiguration").Bind(serviceConfiguration);
 
-			// Register the appSettings as a singleton service
-			services.AddSingleton(appSettings);
+			services.AddSingleton(serviceConfiguration);
 
 			services.AddHostedService<GenericService>();
 			services.AddSingleton<IDateTimeProvider, DateTimeProvider>();

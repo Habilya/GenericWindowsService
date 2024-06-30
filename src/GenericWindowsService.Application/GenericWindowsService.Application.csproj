@@ -22,4 +22,10 @@
 		<ProjectReference Include="..\GenericWindowsService.Library\GenericWindowsService.Library.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="Config\appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
