@@ -34,13 +34,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="FileDuplicatesTests\another_file %281%29.txt">
+    <None Update="FileDuplicatesTests\another_file (2).txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="FileDuplicatesTests\another_file.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="FileDuplicatesTests\file.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="FoldersDuplicatesTests\AnotherFolder (2)\EMPTY.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="FoldersDuplicatesTests\AnotherFolder\EMPTY.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="FoldersDuplicatesTests\SomeFolder\EMPTY.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

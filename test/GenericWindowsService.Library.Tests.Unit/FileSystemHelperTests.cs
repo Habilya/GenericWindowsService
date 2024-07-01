@@ -33,8 +33,8 @@ public class FileSystemHelperTests
 
 	[Theory]
 	[InlineData("file.txt", "file (2).txt")]
-	[InlineData("another_file.txt", "another_file (2).txt")]
-	[InlineData("different_file.txt", "different_file.txt")]
+	[InlineData("another_file.txt", "another_file (3).txt")]
+	[InlineData("different_file.txt", "different_file.txt")] // Should be the same as there is no duplicates in the tested folder
 	public void AdjustFileNameIfDuplicate_ShouldAdjustFileName_WhenDuplicatePresent(string input, string expected)
 	{
 		// Arrange
@@ -43,6 +43,23 @@ public class FileSystemHelperTests
 		// Act
 		var actual = FileSystemHelper.AdjustFileNameIfDuplicate(filefullPath);
 		actual = Path.GetFileName(actual);
+
+		// Assert
+		actual.Should().Be(expected);
+	}
+
+	[Theory]
+	[InlineData("SomeFolder", "SomeFolder (2)")]
+	[InlineData("AnotherFolder", "AnotherFolder (3)")]
+	[InlineData("DifferentFolder", "DifferentFolder")] // Should be the same as there is no duplicates in the tested folder
+	public void AdjustFolderNameIfDuplicate_ShouldAdjustFolderName_WhenDuplicatePresent(string input, string expected)
+	{
+		// Arrange
+		var folderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "FoldersDuplicatesTests", input);
+
+		// Act
+		var actual = FileSystemHelper.AdjustDirectoryNameIfDuplicate(folderPath);
+		actual = new DirectoryInfo(actual).Name;
 
 		// Assert
 		actual.Should().Be(expected);

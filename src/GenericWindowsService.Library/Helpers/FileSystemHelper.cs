@@ -22,6 +22,41 @@ public static class FileSystemHelper
 		return newFullPath;
 	}
 
+	public static string AdjustDirectoryNameIfDuplicate(string directoryPath)
+	{
+		var count = 1;
+		var newFullPath = directoryPath;
+
+		while (Directory.Exists(newFullPath))
+		{
+			newFullPath = string.Format("{0} ({1})", directoryPath, ++count);
+		}
+
+		return newFullPath;
+	}
+
+	public static void MoveFilesAndSubFolders(string fromFolder, string toFolder)
+	{
+		// Get Files & Move
+		string[] files = Directory.GetFiles(fromFolder);
+		foreach (string file in files)
+		{
+			string name = Path.GetFileName(file);
+			string dest = Path.Combine(toFolder, name);
+			dest = AdjustFileNameIfDuplicate(dest);
+			File.Move(file, dest);
+		}
+
+		// Get folders & Move
+		string[] folders = Directory.GetDirectories(fromFolder);
+		foreach (string folder in folders)
+		{
+			string name = Path.GetFileName(folder);
+			string dest = Path.Combine(toFolder, name);
+			Directory.Move(folder, dest);
+		}
+	}
+
 	public static string GuessMimeTypeFromFileName(string fileName)
 	{
 		return MimeTypesMap.GetMimeType(fileName);
