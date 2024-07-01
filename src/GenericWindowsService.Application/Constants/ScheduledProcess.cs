@@ -2,5 +2,5 @@
 
 public static class ScheduledProcess
 {
-	public const string DEFAULT_PROCESS_SCHEDULE = "* * * * *";
+	public const string DEFAULT_PROCESS_SCHEDULE = "* * * * * *";
 }
