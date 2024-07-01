@@ -13,3 +13,4 @@ Model project to demonstrate all the "good implementations"
 - 🔲 File to pdf conversion
 - 🔲 PDF File Merge
 - 🔲 Email sending
+- 🔲 Generate Excel File
