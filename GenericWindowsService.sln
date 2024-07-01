@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericWindowsService.Libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericWindowsService.Library.Tests.Unit", "test\GenericWindowsService.Library.Tests.Unit\GenericWindowsService.Library.Tests.Unit.csproj", "{A50145DB-0C96-4306-88DF-EBF540E3141D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericWindowsService.Application", "src\GenericWindowsService.Application\GenericWindowsService.Application.csproj", "{45F30A4A-806B-4B2C-8F2D-F93824623734}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericWindowsService.Application", "src\GenericWindowsService.Application\GenericWindowsService.Application.csproj", "{45F30A4A-806B-4B2C-8F2D-F93824623734}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
