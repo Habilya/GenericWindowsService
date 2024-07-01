@@ -35,6 +35,11 @@ public static class FileSystemHelper
 		return newFullPath;
 	}
 
+	public static string GuessMimeTypeFromFileName(string fileName)
+	{
+		return MimeTypesMap.GetMimeType(fileName);
+	}
+
 	public static void MoveFilesAndSubFolders(string fromFolder, string toFolder)
 	{
 		// Get Files & Move
@@ -57,8 +62,23 @@ public static class FileSystemHelper
 		}
 	}
 
-	public static string GuessMimeTypeFromFileName(string fileName)
+	public static string CheckForShortcut(string fileFullPath)
 	{
-		return MimeTypesMap.GetMimeType(fileName);
+		return Path.GetExtension(fileFullPath).Equals(".lnk", StringComparison.InvariantCultureIgnoreCase)
+			? GetShortcutTargetPath(fileFullPath)
+			: fileFullPath;
+	}
+
+	public static string GetShortcutTargetPath(string shortcutFilePath)
+	{
+		if (!shortcutFilePath.ToLower().EndsWith(".lnk"))
+		{
+			return "";
+		}
+
+		var shell = new IWshRuntimeLibrary.WshShell();
+		var shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(shortcutFilePath);
+
+		return shortcut.TargetPath;
 	}
 }
