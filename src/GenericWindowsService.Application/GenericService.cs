@@ -21,6 +21,10 @@ public class GenericService : BackgroundService
 		try
 		{
 			_logger.LogInformation("Initializing configuration...");
+			_logger.LogInformation("Version: {appVersion}-{buildNumber} env: {envCodeName}",
+						  _serviceConfiguration.Version,
+						  _serviceConfiguration.Build,
+						  _serviceConfiguration.Environement);
 			_logger.LogInformation("Service {serviceName} is starting...", _serviceConfiguration.ServiceName);
 
 			return base.StartAsync(cancellationToken);

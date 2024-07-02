@@ -23,7 +23,7 @@ class Program
 		Host.CreateDefaultBuilder(args)
 		.ConfigureAppConfiguration((hostContext, config) =>
 		{
-			var ENV_DOTNET_ENVIRONMENT = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+			var ENV_DOTNET_ENVIRONMENT = Environment.GetEnvironmentVariable(Constants.Config.ENV_DOTNET_ENVIRONMENT);
 
 			config.AddJsonFile(@"Config\appsettings.json", optional: false)
 				.AddJsonFile($@"Config\appsettings.{ENV_DOTNET_ENVIRONMENT}.json", optional: true)
@@ -45,7 +45,7 @@ class Program
 		{
 			// Read appsettings.json into a model
 			var serviceConfiguration = new ServiceConfiguration.ServiceConfiguration();
-			hostContext.Configuration.GetSection("ServiceConfiguration").Bind(serviceConfiguration);
+			hostContext.Configuration.GetSection(Constants.Config.APPSETTINGS_SERVICE_CONFIG_NAME).Bind(serviceConfiguration);
 
 			services.AddSingleton(serviceConfiguration);
 			services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
