@@ -12,7 +12,8 @@ Model project to demonstrate all the "good implementations"
 - 🔲 Manage thread starting of a process, if same process havent finnished in another thread
 - 🔲 File to pdf conversion (Aspose)
 - 🔲 PDF File Merge
-- 🔲 Email sending (FluentEmail to send, PaperCut SMPT server to receive emails)
+- 🔲 Generate a PDF from scratch (QuestPDF)
+- 🔲 Email sending (FluentEmail to send, PaperCut SMPT server to receive emails in DEV, not to send emails to actual users for testing purposes :grimacing:)
 - 🔲 SharpZipLib (Archiving to .7z .zip)
 - 🔲 Generate Excel File
 - 🔲 Use Polly for retries
