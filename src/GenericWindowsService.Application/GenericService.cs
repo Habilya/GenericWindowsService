@@ -27,11 +27,12 @@ public class GenericService : BackgroundService
 						  _serviceConfiguration.Environement);
 			_logger.LogInformation("Service {serviceName} is starting...", _serviceConfiguration.ServiceName);
 
+			// base method StartAsync of BackgroundService calls the ExecuteAsync new the end...
 			return base.StartAsync(cancellationToken);
 		}
 		catch (TaskCanceledException)
 		{
-			_logger.LogWarning("GenericService StartAsync Task canceled.");
+			_logger.LogWarning("{genericService} StartAsync Task canceled.", nameof(GenericService));
 			return Task.CompletedTask;
 		}
 		catch (Exception ex)
@@ -51,7 +52,7 @@ public class GenericService : BackgroundService
 		}
 		catch (TaskCanceledException)
 		{
-			_logger.LogWarning("GenericService StopAsync Task canceled.");
+			_logger.LogWarning("{genericService} StopAsync Task canceled.", nameof(GenericService));
 			return Task.CompletedTask;
 		}
 		catch (Exception ex)
@@ -67,17 +68,18 @@ public class GenericService : BackgroundService
 		{
 			while (!stoppingToken.IsCancellationRequested)
 			{
-				//WindowsServiceConfigure.RunnableServices.ForEach(s => s.ServiceThread());
 				await Task.Delay(_serviceConfiguration.RunEveryMS, stoppingToken);
+				//WindowsServiceConfigure.RunnableServices.ForEach(s => s.ServiceThread());
 			}
 		}
 		catch (TaskCanceledException)
 		{
-			_logger.LogWarning("GenericService ExecuteAsync Task canceled.");
+			_logger.LogWarning("{genericService} ExecuteAsync Task canceled.", nameof(GenericService));
 		}
 		catch (Exception ex)
 		{
 			_logger.LogError(ex, "Unhandled excpetion occured while running service.");
+			_logger.LogWarning("Service {genericService} is halted.", nameof(GenericService));
 		}
 	}
 }
