@@ -34,7 +34,8 @@ public class FileSystemHelperTests
 	[Theory]
 	[InlineData("file.txt", "file (2).txt")]
 	[InlineData("another_file.txt", "another_file (3).txt")]
-	[InlineData("different_file.txt", "different_file.txt")] // Should be the same as there is no duplicates in the tested folder
+	// Should be the same as there is no duplicates in the tested folder
+	[InlineData("different_file.txt", "different_file.txt")]
 	public void AdjustFileNameIfDuplicate_ShouldAdjustFileName_WhenDuplicatePresent(string input, string expected)
 	{
 		// Arrange
@@ -51,7 +52,8 @@ public class FileSystemHelperTests
 	[Theory]
 	[InlineData("SomeFolder", "SomeFolder (2)")]
 	[InlineData("AnotherFolder", "AnotherFolder (3)")]
-	[InlineData("DifferentFolder", "DifferentFolder")] // Should be the same as there is no duplicates in the tested folder
+	// Should be the same as there is no duplicates in the tested folder
+	[InlineData("DifferentFolder", "DifferentFolder")]
 	public void AdjustFolderNameIfDuplicate_ShouldAdjustFolderName_WhenDuplicatePresent(string input, string expected)
 	{
 		// Arrange
