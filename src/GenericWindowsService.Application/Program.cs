@@ -49,10 +49,12 @@ class Program
 
 			services.AddSingleton(serviceConfiguration);
 			services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+			services.AddSingleton<ICronSchedulingProvider, CronSchedulingProvider>();
 			services.AddSingleton<IGuidProvider, GuidProvider>();
 			services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
+			services.AddSingleton<GenericService>();
 
 			// The Service itself
-			services.AddHostedService<GenericService>();
+			services.AddHostedService<BackgroundWorker>();
 		});
 }
