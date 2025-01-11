@@ -6,12 +6,12 @@ namespace GenericWindowsService.Application;
 public class BackgroundWorker : BackgroundService
 {
 	private readonly ILoggerAdapter<BackgroundWorker> _logger;
-	private readonly ServiceConfiguration.ServiceConfiguration _serviceConfiguration;
+	private readonly ServiceConfiguration.ServiceGenericConfiguration _serviceConfiguration;
 	private readonly GenericService _genericService;
 
 	public BackgroundWorker(
 		ILoggerAdapter<BackgroundWorker> logger,
-		ServiceConfiguration.ServiceConfiguration serviceConfiguration,
+		ServiceConfiguration.ServiceGenericConfiguration serviceConfiguration,
 		GenericService genericService)
 	{
 		_logger = logger;

@@ -44,7 +44,7 @@ class Program
 		.ConfigureServices((hostContext, services) =>
 		{
 			// Read appsettings.json into a model
-			var serviceConfiguration = new ServiceConfiguration.ServiceConfiguration();
+			var serviceConfiguration = new ServiceConfiguration.ServiceGenericConfiguration();
 			hostContext.Configuration.GetSection(Constants.Config.APPSETTINGS_SERVICE_CONFIG_NAME).Bind(serviceConfiguration);
 
 			services.AddSingleton(serviceConfiguration);

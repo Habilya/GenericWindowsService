@@ -1,17 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using GenericWindowsService.Application.Constants;
+using System.Text.Json.Serialization;
 
 namespace GenericWindowsService.Application.ServiceConfiguration;
 
-public class ServiceConfiguration
+public class ServiceGenericConfiguration
 {
-	public ServiceConfiguration()
+	public ServiceGenericConfiguration()
 	{
-		Version = typeof(Program).Assembly.GetName().Version?.ToString() ?? Constants.Config.ENV_DEFAULT_VARIABLE_ANSWER;
-		Build = Environment.GetEnvironmentVariable(Constants.Config.ENV_BUILD_NUMBER) ?? Constants.Config.ENV_DEFAULT_VARIABLE_ANSWER;
-		Environement = Environment.GetEnvironmentVariable(Constants.Config.ENV_DOTNET_ENVIRONMENT) ?? Constants.Config.ENV_DEFAULT_VARIABLE_ANSWER;
+		Version = Versionning.GetVersion();
+		Build = Versionning.GetVersionPostfix();
 	}
 
 	public string ServiceName { get; init; } = default!;
+	public string Environement { get; init; } = default!;
 	public int RunEveryMS { get; init; } = 3000;
 	public int MaxDegreeOfParallelism { get; init; } = 3;
 	public bool IsNetworkPingEnabled { get; init; } = false;
@@ -22,8 +23,6 @@ public class ServiceConfiguration
 	public string Version { get; init; } = default!;
 	[JsonIgnore]
 	public string Build { get; init; } = default!;
-	[JsonIgnore]
-	public string Environement { get; init; } = default!;
 
 	public List<ScheduledProcessConfiguration> ProcessesConfigurations { get; init; } = default!;
 

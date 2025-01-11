@@ -11,7 +11,7 @@ public class GenericService
 	private readonly ILoggerAdapter<BackgroundWorker> _logger;
 	private readonly IDateTimeProvider _dateTimeProvider;
 	private readonly ICronSchedulingProvider _cronSchedulingProvider;
-	private readonly ServiceConfiguration.ServiceConfiguration _serviceConfiguration;
+	private readonly ServiceConfiguration.ServiceGenericConfiguration _serviceConfiguration;
 
 	private readonly ConcurrentDictionary<string, Task> _runningProcesses = default!;
 
@@ -19,7 +19,7 @@ public class GenericService
 
 	public GenericService(
 		ILoggerAdapter<BackgroundWorker> logger,
-		ServiceConfiguration.ServiceConfiguration serviceConfiguration,
+		ServiceConfiguration.ServiceGenericConfiguration serviceConfiguration,
 		ICronSchedulingProvider cronSchedulingProvider,
 		IDateTimeProvider dateTimeProvider)
 	{
