@@ -24,7 +24,7 @@ public class ServiceGenericConfiguration
 	[JsonIgnore]
 	public string Build { get; init; } = default!;
 
-	public List<ScheduledProcessConfiguration> ProcessesConfigurations { get; init; } = default!;
+	public List<ScheduledProcessConfiguration> ScheduledProcesses { get; init; } = default!;
 
 	public void ValidateServiceLevelConfig()
 	{

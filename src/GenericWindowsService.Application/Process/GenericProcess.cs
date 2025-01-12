@@ -9,7 +9,7 @@ public class GenericProcess : IGenericProcess
 	protected readonly ILoggerAdapter<GenericProcess> _loggerAdapter;
 
 	public ScheduledProcessConfiguration ScheduledProcessConfiguration { protected set; get; } = default!;
-	public bool IsValid { get; set; } = default!;
+	public bool IsValid { get; set; } = true;
 	public List<string> ValidationMessages { get; set; } = new List<string>();
 	public DateTime NextRunTime { get; set; } = DateTime.MinValue;
 
@@ -26,6 +26,7 @@ public class GenericProcess : IGenericProcess
 		if (ScheduledProcessConfiguration == default!)
 		{
 			ScheduledProcessConfiguration = config;
+			LogInformation("Initializing configuration.");
 		}
 		else
 		{
@@ -36,16 +37,20 @@ public class GenericProcess : IGenericProcess
 
 	public virtual void ValidateConfig()
 	{
-		// In the inhertided classes vrite some validations to populate ValidationMessages
+		ConfigValidations();
+
 		if (ValidationMessages.Any())
 		{
 			IsValid = false;
 		}
 	}
 
+	// To be redefined in the child classes
+	protected virtual void ConfigValidations() { }
+
+	// In the inhertided classes vrite some validations to populate ValidationMessages
 	public virtual bool IsValidBeforeRun()
 	{
-		// In the inhertided classes vrite some validations to populate ValidationMessages
 		return true;
 	}
 
@@ -75,5 +80,9 @@ public class GenericProcess : IGenericProcess
 		return $"[{ScheduledProcessConfiguration.LabelAndProcessCode}]: {message}";
 	}
 
-	public virtual void RunProcess() { }
+	// Must be overriden in the child classes
+	public virtual void RunProcess()
+	{
+		throw new NotImplementedException();
+	}
 }

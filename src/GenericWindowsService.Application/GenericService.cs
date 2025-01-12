@@ -1,5 +1,6 @@
 ﻿using GenericWindowsService.Application.Factory;
 using GenericWindowsService.Application.Process;
+using GenericWindowsService.Application.ServiceConfiguration;
 using GenericWindowsService.Library.Extensions;
 using GenericWindowsService.Library.Logging;
 using GenericWindowsService.Library.Providers;
@@ -13,7 +14,7 @@ public class GenericService
 	private readonly ILoggerAdapter<BackgroundWorker> _logger;
 	private readonly IDateTimeProvider _dateTimeProvider;
 	private readonly ICronSchedulingProvider _cronSchedulingProvider;
-	private readonly ServiceConfiguration.ServiceGenericConfiguration _serviceConfiguration;
+	private readonly ServiceGenericConfiguration _serviceConfiguration;
 	private readonly GenericProcessFactory _genericProcessFactory;
 
 	private readonly ConcurrentDictionary<string, Task> _runningProcesses = default!;
@@ -23,7 +24,7 @@ public class GenericService
 	public GenericService(
 		IServiceProvider serviceProvider,
 		ILoggerAdapter<BackgroundWorker> logger,
-		ServiceConfiguration.ServiceGenericConfiguration serviceConfiguration,
+		ServiceGenericConfiguration serviceConfiguration,
 		ICronSchedulingProvider cronSchedulingProvider,
 		IDateTimeProvider dateTimeProvider,
 		GenericProcessFactory genericProcessFactory)
@@ -36,26 +37,61 @@ public class GenericService
 		_genericProcessFactory = genericProcessFactory;
 
 		_runningProcesses = new ConcurrentDictionary<string, Task>();
-
-		InitializeProcessesToRun();
 	}
 
 	public virtual void InitializeProcessesToRun()
 	{
 		ProcessesToRun = new List<GenericProcess>();
 
-		_serviceConfiguration.ProcessesConfigurations.ForEach(p =>
+		var enabledProcessConfigs = _serviceConfiguration.ScheduledProcesses
+			.Where(q => q.IsEnabled)
+			.ToList();
+
+		enabledProcessConfigs.ForEach(p =>
 		{
 			var createdProcess = _genericProcessFactory.MakeProcess(p.ProcessCodeName, _serviceProvider);
-
 			createdProcess.InitConfig(p);
 			createdProcess.ValidateConfig();
 
 			if (createdProcess.IsValid)
 			{
+				UpdateNextRunTime(createdProcess, _dateTimeProvider.DateTimeNow);
 				ProcessesToRun.Add(createdProcess);
 			}
+			else
+			{
+				_logger.LogWarning($"Invalid processes ({createdProcess.ScheduledProcessConfiguration.LabelAndProcessCode})");
+			}
 		});
+
+		LogInitializedProcesses(enabledProcessConfigs);
+		LogDisabledProcesses();
+	}
+
+	private void LogInitializedProcesses(List<ScheduledProcessConfiguration> enabledProcessConfigs)
+	{
+		_logger.LogInformation($"Initialized processes:");
+		foreach (var p in ProcessesToRun)
+		{
+			_logger.LogInformation($"[{p.ScheduledProcessConfiguration.LabelAndProcessCode}] Schedule ({p.ScheduledProcessConfiguration.Schedule}), Next run at :{p.NextRunTime}");
+		}
+		_logger.LogInformation($"Initialized {ProcessesToRun.Count}/{enabledProcessConfigs.Count} processes.");
+	}
+
+	private void LogDisabledProcesses()
+	{
+		var disabledProcesses = _serviceConfiguration.ScheduledProcesses
+			.Where(q => !q.IsEnabled)
+			.ToList();
+
+		if (disabledProcesses.Any())
+		{
+			_logger.LogWarning($"Disabled processes ({disabledProcesses.Count})");
+			disabledProcesses.ForEach(p =>
+			{
+				_logger.LogWarning($"\t{p.LabelAndProcessCode}");
+			});
+		}
 	}
 
 	public virtual void ServiceThread()

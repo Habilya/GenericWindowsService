@@ -11,4 +11,14 @@ public class ScanForParticularFiles : GenericProcess
 		: base(loggerAdapter, serviceConfiguration)
 	{
 	}
+
+	protected override void ConfigValidations()
+	{
+
+	}
+
+	public override void RunProcess()
+	{
+		LogInformation("Process tick");
+	}
 }
