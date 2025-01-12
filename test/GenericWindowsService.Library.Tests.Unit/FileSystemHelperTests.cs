@@ -8,7 +8,7 @@ public class FileSystemHelperTests
 	[Theory]
 	[InlineData("test.html", "text/html")]
 	[InlineData("test.pdf", "application/pdf")]
-	[InlineData("test.js", "application/javascript")]
+	[InlineData("test.js", "text/javascript")]
 	[InlineData("test.php", "application/octet-stream")]
 	[InlineData("test.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")]
 	[InlineData("test.xls", "application/vnd.ms-excel")]

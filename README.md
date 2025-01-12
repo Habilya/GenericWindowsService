@@ -12,8 +12,9 @@ Model project to demonstrate all the "good implementations"
 - ✅ Manage thread starting of a process, if same process havent finnished in another thread
 - ✅ Adjust versionning
 - 🔲 Semaphore for multithreaded process execution
-- 🔲 Add Factory to spawn different processes
-- 🔲 Add Few generic processes
+- ✅ Add Factory to spawn different processes
+- ✅ Add Few generic processes
+- 🔲 Add validations with fluentValidations
 - 🔲 Add Integration Tests
 - 🔲 Possibility to read adhoc lists
 - 🔲 Add Notifier abstarction with possibility to configure multiple notifications (email, etc)
