@@ -31,6 +31,7 @@ public class GenericProcess : IGenericProcess
 		else
 		{
 			ValidationMessages.Add("Config can only be initialized once..");
+			IsValid = false;
 			LogWarning("Attempt to reinitialize config.");
 		}
 	}
