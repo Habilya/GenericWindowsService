@@ -1,4 +1,6 @@
-﻿using GenericWindowsService.Library.Logging;
+﻿using GenericWindowsService.Application.Factory;
+using GenericWindowsService.Application.Process.Concrete;
+using GenericWindowsService.Library.Logging;
 using GenericWindowsService.Library.Providers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +52,14 @@ class Program
 			services.AddSingleton<IGuidProvider, GuidProvider>();
 			services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 			services.AddSingleton<GenericService>();
+
+
+			// Register concrete process classes
+			services.AddTransient<OldFilesRemover>();
+			services.AddTransient<ScanForParticularFiles>();
+
+			services.AddSingleton<GenericProcessFactory>();
+
 
 			// The Service itself
 			services.AddHostedService<BackgroundWorker>();

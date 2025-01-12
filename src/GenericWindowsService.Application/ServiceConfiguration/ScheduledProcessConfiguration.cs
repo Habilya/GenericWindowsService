@@ -10,4 +10,6 @@ public class ScheduledProcessConfiguration
 	public bool IsNetworkDependant { get; init; } = false;
 	public string Schedule { get; init; } = ScheduledProcess.DEFAULT_PROCESS_SCHEDULE;
 	public Dictionary<string, object> AdHocFields { get; init; } = default!;
+
+	public string LabelAndProcessCode { get { return $"{ProcessLabel}-{ProcessCodeName}"; } }
 }

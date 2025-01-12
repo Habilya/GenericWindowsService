@@ -1,4 +1,5 @@
-﻿using GenericWindowsService.Application.Process;
+﻿using GenericWindowsService.Application.Factory;
+using GenericWindowsService.Application.Process;
 using GenericWindowsService.Library.Extensions;
 using GenericWindowsService.Library.Logging;
 using GenericWindowsService.Library.Providers;
@@ -8,36 +9,53 @@ namespace GenericWindowsService.Application;
 
 public class GenericService
 {
+	private readonly IServiceProvider _serviceProvider;
 	private readonly ILoggerAdapter<BackgroundWorker> _logger;
 	private readonly IDateTimeProvider _dateTimeProvider;
 	private readonly ICronSchedulingProvider _cronSchedulingProvider;
 	private readonly ServiceConfiguration.ServiceGenericConfiguration _serviceConfiguration;
+	private readonly GenericProcessFactory _genericProcessFactory;
 
 	private readonly ConcurrentDictionary<string, Task> _runningProcesses = default!;
 
 	protected List<GenericProcess> ProcessesToRun { get; set; } = default!;
 
 	public GenericService(
+		IServiceProvider serviceProvider,
 		ILoggerAdapter<BackgroundWorker> logger,
 		ServiceConfiguration.ServiceGenericConfiguration serviceConfiguration,
 		ICronSchedulingProvider cronSchedulingProvider,
-		IDateTimeProvider dateTimeProvider)
+		IDateTimeProvider dateTimeProvider,
+		GenericProcessFactory genericProcessFactory)
 	{
 		_logger = logger;
+		_serviceProvider = serviceProvider;
 		_dateTimeProvider = dateTimeProvider;
 		_cronSchedulingProvider = cronSchedulingProvider;
 		_serviceConfiguration = serviceConfiguration;
+		_genericProcessFactory = genericProcessFactory;
 
 		_runningProcesses = new ConcurrentDictionary<string, Task>();
 
 		InitializeProcessesToRun();
 	}
 
-	// TODO: Add Process Initialization (Factory?) 
-	// populate ProcessesToRun
 	public virtual void InitializeProcessesToRun()
 	{
-		throw new NotImplementedException();
+		ProcessesToRun = new List<GenericProcess>();
+
+		_serviceConfiguration.ProcessesConfigurations.ForEach(p =>
+		{
+			var createdProcess = _genericProcessFactory.MakeProcess(p.ProcessCodeName, _serviceProvider);
+
+			createdProcess.InitConfig(p);
+			createdProcess.ValidateConfig();
+
+			if (createdProcess.IsValid)
+			{
+				ProcessesToRun.Add(createdProcess);
+			}
+		});
 	}
 
 	public virtual void ServiceThread()
@@ -103,7 +121,7 @@ public class GenericService
 	private bool ShouldSkipThisProcess(GenericProcess processToRun, string processSignature)
 	{
 		// Run the method that is intended with validations to be run before each run
-		if (!ProcessPrevalidateBeforeRun(processToRun))
+		if (!processToRun.IsValidBeforeRun())
 		{
 			return true;
 		}
@@ -118,19 +136,16 @@ public class GenericService
 		return false;
 	}
 
-	private bool ProcessPrevalidateBeforeRun(GenericProcess processToRun)
-	{
-		throw new NotImplementedException();
-	}
-
 	private void UpdateNextRunTime(GenericProcess processToRun, DateTime currentTime)
 	{
-		processToRun.NextRunTime = _cronSchedulingProvider.GetNextRunFromSchedule(processToRun.ProcessConfiguration.Schedule);
+		processToRun.NextRunTime = _cronSchedulingProvider.GetNextRunFromSchedule(processToRun.ScheduledProcessConfiguration.Schedule);
 	}
 
 	private List<GenericProcess> PrepareProcessesToRun()
 	{
-		throw new NotImplementedException();
+		return ProcessesToRun
+			.Where(q => q.IsValid)
+			.ToList();
 	}
 
 	public virtual void EndAllProcesses()

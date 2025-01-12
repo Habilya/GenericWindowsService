@@ -81,4 +81,10 @@ public static class FileSystemHelper
 
 		return shortcut.TargetPath;
 	}
+
+	public static bool IsFileLocked(FileInfo fileInfo)
+	{
+		// TODO: 
+		throw new NotImplementedException();
+	}
 }
