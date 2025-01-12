@@ -52,14 +52,12 @@ class Program
 			services.AddSingleton<IGuidProvider, GuidProvider>();
 			services.AddTransient(typeof(ILoggerAdapter<>), typeof(LoggerAdapter<>));
 			services.AddSingleton<GenericService>();
-
-
-			// Register concrete process classes
-			services.AddTransient<OldFilesRemover>();
-			services.AddTransient<ScanForParticularFiles>();
-
 			services.AddSingleton<GenericProcessFactory>();
 
+			#region Register concrete process classes
+			services.AddTransient<OldFilesRemover>();
+			services.AddTransient<ScanForParticularFiles>();
+			#endregion
 
 			// The Service itself
 			services.AddHostedService<BackgroundWorker>();
