@@ -24,9 +24,8 @@ public class BackgroundWorker : BackgroundService
 		try
 		{
 			_logger.LogInformation("Initializing configuration...");
-			_logger.LogInformation("Version: {appVersion}-{buildNumber} env: {envCodeName}",
-				_serviceConfiguration.Version,
-				_serviceConfiguration.Build,
+			_logger.LogInformation("{appVersion} env: {envCodeName}",
+				_serviceConfiguration.GetVersionOneLiner(),
 				_serviceConfiguration.Environement);
 
 			_serviceConfiguration.ValidateServiceLevelConfig();

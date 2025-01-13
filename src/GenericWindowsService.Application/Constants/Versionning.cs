@@ -47,9 +47,4 @@ public static class Versionning
 			return ENV_DEFAULT_VARIABLE_ANSWER;
 		}
 	}
-
-	public static string GetVersionOneLiner()
-	{
-		return $"v{GetVersion()}-{GetVersionPostfix()}";
-	}
 }

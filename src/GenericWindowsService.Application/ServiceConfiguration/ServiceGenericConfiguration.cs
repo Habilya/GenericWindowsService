@@ -24,6 +24,11 @@ public class ServiceGenericConfiguration
 	[JsonIgnore]
 	public string Build { get; init; } = default!;
 
+	public string GetVersionOneLiner()
+	{
+		return $"v{Version}-{Build}";
+	}
+
 	public List<ScheduledProcessConfiguration> ScheduledProcesses { get; init; } = default!;
 
 	public void ValidateServiceLevelConfig()
