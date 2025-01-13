@@ -82,9 +82,42 @@ public static class FileSystemHelper
 		return shortcut.TargetPath;
 	}
 
-	public static bool IsFileLocked(FileInfo fileInfo)
+	public static bool IsFileLocked(FileInfo file)
 	{
-		// TODO: 
-		throw new NotImplementedException();
+		try
+		{
+			using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
+			{
+				stream.Close();
+			}
+		}
+		catch (IOException)
+		{
+			//the file is unavailable because it is:
+			//still being written to
+			//or being processed by another thread
+			//or does not exist (has already been processed)
+			return true;
+		}
+
+		//file is not locked
+		return false;
+	}
+
+	public static string AdjustFileNameIfLocked(string fileFullPath)
+	{
+		int count = 1;
+
+		string fileNameOnly = Path.GetFileNameWithoutExtension(fileFullPath);
+		string extension = Path.GetExtension(fileFullPath);
+		string path = Path.GetDirectoryName(fileFullPath)!;
+		string newFullPath = fileFullPath;
+
+		while (File.Exists(newFullPath) && IsFileLocked(new FileInfo(newFullPath)))
+		{
+			string tempFileName = string.Format("{0}_WasLocked({1})", fileNameOnly, count++);
+			newFullPath = Path.Combine(path, tempFileName + extension);
+		}
+		return newFullPath;
 	}
 }
