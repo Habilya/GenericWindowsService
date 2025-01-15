@@ -8,7 +8,7 @@ public class GenericProcess : IGenericProcess
 	protected readonly ServiceGenericConfiguration _serviceConfiguration;
 	protected readonly ILoggerAdapter<GenericProcess> _loggerAdapter;
 
-	public ScheduledProcessConfiguration ScheduledProcessConfiguration { protected set; get; } = default!;
+	public ScheduledProcessConfiguration ScheduledProcessConfiguration { get; protected set; } = default!;
 	public bool IsValid { get; set; } = true;
 	public List<string> ValidationMessages { get; set; } = new List<string>();
 	public DateTime NextRunTime { get; set; } = DateTime.MinValue;

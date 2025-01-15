@@ -21,4 +21,5 @@ Model project to demonstrate all the "good implementations"
 - 🔲 Error Reporting / Crash Logging NuGet package: Sentry or Rollbar crash reporting service like Sentry to track unhandled exceptions, application crashes, and other error details automatically.
 - 🔲 Email sending (FluentEmail to send, PaperCut SMPT server to receive emails in DEV, not to send emails to actual users for testing purposes :grimacing:)
 - 🔲 SharpZipLib (Archiving to .7z .zip)
+- 🔲 Use shouldly for tests assertions https://github.com/shouldly/shouldly
 - 🔲 Use Polly for retries
