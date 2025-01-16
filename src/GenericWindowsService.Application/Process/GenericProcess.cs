@@ -3,7 +3,7 @@ using GenericWindowsService.Library.Logging;
 
 namespace GenericWindowsService.Application.Process;
 
-public class GenericProcess : IGenericProcess
+public abstract class GenericProcess : IGenericProcess
 {
 	protected readonly ServiceGenericConfiguration _serviceConfiguration;
 	protected readonly ILoggerAdapter<GenericProcess> _loggerAdapter;
@@ -82,8 +82,5 @@ public class GenericProcess : IGenericProcess
 	}
 
 	// Must be overriden in the child classes
-	public virtual void RunProcess()
-	{
-		throw new NotImplementedException();
-	}
+	public abstract void RunProcess();
 }
