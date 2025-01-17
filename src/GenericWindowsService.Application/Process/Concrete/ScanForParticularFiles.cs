@@ -24,5 +24,6 @@ public class ScanForParticularFiles : GenericProcess
 	public override void RunProcess()
 	{
 		LogInformation($"Process tick {_guidProvider.NewGuid()}");
+		Thread.Sleep(90000);
 	}
 }
