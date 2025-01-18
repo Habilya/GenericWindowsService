@@ -7,7 +7,7 @@ Model project to demonstrate all the "good implementations"
 - ✅ Dependency Injection
 - ✅ Serilog Logger + Rolling File
 - ✅ Cron tab (similar) scheduling system for processes (NCrontab.Signed)
-- ✅ Unit tests (xUnit, FluentAssertions, NSubstitute, bogus, Verify)
+- ✅ Unit tests (xUnit, Shouldly, NSubstitute, bogus, Verify)
 - ✅ Multi-thread processes (manage maximum threads)
 - ✅ Manage thread starting of a process, if same process havent finnished in another thread
 - ✅ Adjust versionning

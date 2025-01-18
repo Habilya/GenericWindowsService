@@ -14,6 +14,7 @@ class Program
 {
 	public static void Main(string[] args)
 	{
+		// Ensure we are where the executable is 
 		Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 
 		CreateHostBuilder(args)
