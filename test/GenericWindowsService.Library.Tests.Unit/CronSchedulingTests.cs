@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
-using GenericWindowsService.Library.Providers;
+﻿using GenericWindowsService.Library.Providers;
 using NSubstitute;
+using Shouldly;
 using System.Globalization;
 
 namespace GenericWindowsService.Library.Tests.Unit;
@@ -43,6 +43,6 @@ public class CronSchedulingTests
 		var actual = _sut.GetNextRunFromSchedule(schedule);
 
 		// Assert
-		actual.Should().Be(expectedDateTime);
+		actual.ShouldBe(expectedDateTime);
 	}
 }

@@ -19,5 +19,5 @@ Model project to demonstrate all the "good implementations"
 - 🔲 Add Notifier abstarction with possibility to configure multiple notifications (email, etc)
 - 🔲 Email sending (FluentEmail to send, PaperCut SMPT server to receive emails in DEV, not to send emails to actual users for testing purposes :grimacing:)
 - 🔲 SharpZipLib (Archiving to .7z .zip)
-- 🔲 Use shouldly for tests assertions https://github.com/shouldly/shouldly
+- ✅ Use shouldly for tests assertions https://github.com/shouldly/shouldly
 - 🔲 Use Polly for retries

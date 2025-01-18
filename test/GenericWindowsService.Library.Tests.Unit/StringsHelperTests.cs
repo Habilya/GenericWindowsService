@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using GenericWindowsService.Library.Helpers;
+﻿using GenericWindowsService.Library.Helpers;
+using Shouldly;
 
 namespace GenericWindowsService.Library.Tests.Unit;
 
@@ -26,6 +26,6 @@ public class StringsHelperTests
 		var actual = StringsHelper.RemoveDiacritics(input);
 
 		// Assert
-		actual.Should().Be(expected);
+		actual.ShouldBe(expected);
 	}
 }

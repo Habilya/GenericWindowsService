@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using GenericWindowsService.Library.Helpers;
+﻿using GenericWindowsService.Library.Helpers;
+using Shouldly;
 
 namespace GenericWindowsService.Library.Tests.Unit;
 
@@ -28,7 +28,7 @@ public class FileSystemHelperTests
 		var actual = FileSystemHelper.GuessMimeTypeFromFileName(input);
 
 		// Assert
-		actual.Should().Be(expected);
+		actual.ShouldBe(expected);
 	}
 
 	[Theory]
@@ -46,7 +46,7 @@ public class FileSystemHelperTests
 		actual = Path.GetFileName(actual);
 
 		// Assert
-		actual.Should().Be(expected);
+		actual.ShouldBe(expected);
 	}
 
 	[Theory]
@@ -64,6 +64,6 @@ public class FileSystemHelperTests
 		actual = new DirectoryInfo(actual).Name;
 
 		// Assert
-		actual.Should().Be(expected);
+		actual.ShouldBe(expected);
 	}
 }
