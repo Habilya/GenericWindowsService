@@ -14,6 +14,7 @@ Model project to demonstrate all the "good implementations"
 - 🔲 Semaphore for multithreaded process execution
 - ✅ Add Factory to spawn different processes
 - ✅ Add Few generic processes
+- 🔲 var createdProcess = _genericProcessFactory.MakeProcess(p.ProcessCodeName, _serviceProvider);  Throws an exception if process is not resolved, need to handle it
 - 🔲 Add Integration Tests
 - 🔲 Possibility to read adhoc lists
 - 🔲 Add Notifier abstarction with possibility to configure multiple notifications (email, etc)
